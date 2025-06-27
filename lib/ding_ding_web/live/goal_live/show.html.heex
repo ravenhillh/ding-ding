@@ -1,0 +1,32 @@
+<div id="goal-detail" phx-hook="DingDingSound">
+  <h1><%= @goal.title %></h1>
+  <p><%= @goal.description %></p>
+  <p><strong>Due:</strong> <%= @goal.due_date %></p>
+  
+  <h2>Steps</h2>
+  <ul>
+    <%= for step <- @goal.steps do %>
+      <li>
+        <label>
+          <input type="checkbox" 
+                 phx-click="toggle_step" 
+                 phx-value-id={step.id} 
+                 checked={step.completed} />
+          <%= step.title %>
+        </label>
+      </li>
+    <% end %>
+  </ul>
+
+  <!-- Optional visual message -->
+  <%= if Enum.all?(@goal.steps, & &1.completed) do %>
+    <div class="goal-completed-banner">🎉 Goal completed! 🎉</div>
+  <% end %>
+
+  <!-- Audio element for the ding sound -->
+   <audio id="ding-ding-sound" preload="auto">
+    <source src="/sounds/ding-ding.mp3" type="audio/mpeg">
+    <!-- Fallback for browsers that don't support audio element -->
+    Your browser does not support the audio element.
+  </audio>
+</div>
