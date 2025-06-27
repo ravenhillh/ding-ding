@@ -14,19 +14,20 @@ defmodule DingDingWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", DingDingWeb do
-    pipe_through :browser
+ scope "/", DingDingWeb do
+  pipe_through :browser
 
-    get "/", PageController, :home
-    live "/goals", GoalLive.Index, :index
-    live "/goals/new", GoalLive.Index, :new
-    live "/goals/:id/edit", GoalLive.Index, :edit
+  # Home page now points to /goals
+  live "/", GoalLive.Index, :index
 
-    live "/goals/:id", GoalLive.Show, :show
-    live "/goals/:id/show/edit", GoalLive.Show, :edit
+  # Goals routes
+  live "/goals", GoalLive.Index, :index
+  live "/goals/new", GoalLive.Index, :new
+  live "/goals/:id/edit", GoalLive.Index, :edit
 
-
-  end
+  live "/goals/:id", GoalLive.Show, :show
+  live "/goals/:id/show/edit", GoalLive.Show, :edit
+end
 
   # Other scopes may use custom stacks.
   # scope "/api", DingDingWeb do
